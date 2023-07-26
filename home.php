@@ -16,6 +16,7 @@ while ($row = mysqli_fetch_array($result)) {
     <link href="style.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!--font awesome css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!--stylesheet-->
     <link rel="stylesheet" href="style.css">
@@ -24,7 +25,7 @@ while ($row = mysqli_fetch_array($result)) {
 
 <body>
     <div class="row">
-        <ul>
+        <ul class="topnav" id="myTopnav">
             <li><img src="osmosis learn logo.png" alt="osmosis learn logo" class="logo" width="250" height="80"></li>
             <li><a href="#explore" class="explore">Explore</a></li>
             <li><a href="#create" class="create">Create</a></li>
@@ -48,7 +49,7 @@ while ($row = mysqli_fetch_array($result)) {
             <?php
             for ($i = 0; $i < count($arrContent); $i++) {
                 $id = $arrContent[$i]['asset_id'];
-                $filetype =  $arrContent[$i]['filetype'];
+                $filetype = $arrContent[$i]['filetype'];
                 $author = $arrContent[$i]['author'];
                 $intent = $arrContent[$i]['intent'];
                 $picture = $arrContent[$i]['thumbnail'];
@@ -87,6 +88,7 @@ while ($row = mysqli_fetch_array($result)) {
             }
             ?>
         </table>
+    </div>
 </body>
 
 </html>
