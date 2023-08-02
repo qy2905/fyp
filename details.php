@@ -39,7 +39,7 @@ if (!empty($row)) {
 <body>
     <div class="row">
         <ul class="topnav" id="myTopnav">
-            <li><img src="osmosis learn logo.png" alt="osmosis learn logo" class="logo" width="250" height="80"></li>
+            <li><img src="media/osmosis learn logo.png" alt="osmosis learn logo" class="logo" width="250" height="80"></li>
             <li><a href="#explore" class="explore">Explore</a></li>
             <li><a href="#create" class="create">Create</a></li>
             <li><a href="#events" class="events">Events</a></li>
