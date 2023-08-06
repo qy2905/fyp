@@ -2,21 +2,21 @@
 
 include "dbFunctions.php";
 
-$id = $_GET['asset_id'];
+$id = isset($_GET['asset_id']) ? htmlspecialchars($_GET['asset_id'], ENT_QUOTES, 'UTF-8') : null;
 $query = "SELECT * FROM asset WHERE asset_id='$id'";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 $row = mysqli_fetch_array($result);
 if (!empty($row)) {
-    $filetype = $row['filetype'];
-    $author = $row['author'];
-    $intent = $row['intent'];
-    $picture = $row['thumbnail'];
-    $skilltags = $row['skill_tags'];
-    $publisher = $row['publisher'];
-    $title = $row['title'];
-    $content = $row['content'];
-    $duration = $row['duration'];
-    $date = $row['pub_date'];
+    $filetype = htmlspecialchars($row['filetype'], ENT_QUOTES, 'UTF-8');
+    $author = htmlspecialchars($row['author'], ENT_QUOTES, 'UTF-8');
+    $intent = htmlspecialchars($row['intent'], ENT_QUOTES, 'UTF-8');
+    $picture = htmlspecialchars($row['thumbnail'], ENT_QUOTES, 'UTF-8');
+    $skilltags = htmlspecialchars($row['skill_tags'], ENT_QUOTES, 'UTF-8');
+    $publisher = htmlspecialchars($row['publisher'], ENT_QUOTES, 'UTF-8');
+    $title = htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8');
+    $content = htmlspecialchars($row['content'], ENT_QUOTES, 'UTF-8');
+    $duration = htmlspecialchars($row['duration'], ENT_QUOTES, 'UTF-8');
+    $date = htmlspecialchars($row['pub_date'], ENT_QUOTES, 'UTF-8');
 }
 ?>
 <!DOCTYPE html>
@@ -34,19 +34,6 @@ if (!empty($row)) {
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
         integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
     <title>Filetype</title>
-    <style>
-    #app {
-        padding-left: 100px;
-    }
-
-    .skilltag {
-        font-size: 15px;
-        padding-top: 20px;
-        padding-left: 60px;
-        color: gray;
-        font-weight: bold;
-    }
-    </style>
 </head>
 
 <body>
@@ -62,9 +49,7 @@ if (!empty($row)) {
         </ul>
         <hr>
         <div class="navbottom" style="padding-left:50px;">
-            <a href="home.php" style="text-decoration:none;color:black;">
-                <i class="fas fa-home"></i>
-            </a>
+            <i class="fas fa-home" href="home.php"></i>
             <a> > </a>
             <?php echo $title; ?>
         </div>
@@ -206,42 +191,27 @@ if (!empty($row)) {
         </div>
     </div>
     <?php } ?>
-    <div class="footer" style="padding: 0;left: 0;bottom: 0;width: 100%;">
-        <footer class="navbar navbar-expand-sm" style="background-color: #3a2718;">
-            <div class="container-fluid">
-                <ul class="nav text-muted" style="background-color: #3a2718;">
-                    <li class="nav-item">
-                        <a class="pl-2 pr-2 btn btn-footer" style="color: #fff;" href="about-us">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="pl-2 pr-2 btn btn-footer" style="color: #fff;" href="#private-policy">Privacy
-                            Policy</a>
-                    </li>
-                </ul>
-                <button class="button button1" style="background-color:#3a2718;">
-                    <a class="pl-2 pr-2 btn btn-footer" style="color: #fff;" href="#feedback">We Love to Hear From
-                        You</a>
-                </button>
-            </div>
-        </footer>
+    <footer class="navbar navbar-expand-sm" style="background-color: #3a2718;">
+        <div class="container-fluid">
+            <ul class="nav text-muted" style="background-color: #3a2718;">
+                <li class="nav-item">
+                    <a class="pl-2 pr-2 btn btn-footer" style="color: #fff;" href="about-us">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="pl-2 pr-2 btn btn-footer" style="color: #fff;" href="#private-policy">Privacy Policy</a>
+                </li>
+            </ul>
+            <button class="button button1" style="background-color:#3a2718;">
+                <a class="pl-2 pr-2 btn btn-footer" style="color: #fff;" href="#feedback">We Love to Hear From You</a>
+            </button>
+        </div>
+    </footer>
 
-        <div class="footer footer-btm" style="background-color: #503620; color: white;">
-            <div class="footer container justify-content-end text-end">
-                © 2023 Osmosis Learn
-            </div>
+    <div class="footer footer-btn" style="background-color: #503620; color: white;">
+        <div class="footer container justify-content-end text-end">
+            © 2023 Osmosis Learn
         </div>
     </div>
 </body>
-<!-- allow iframes load faster -->
-<script>
-function ready() {
-    var target = document.getElementById('app');
-
-    for (var i = 0; i < target.length; i++) {
-        var src = target[i].getAttribute('data-src');
-        target[i].setAttribute('src', src);
-    }
-}
-</script>
 
 </html>
