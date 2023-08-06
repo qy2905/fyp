@@ -34,13 +34,27 @@ if (!empty($row)) {
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
         integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
     <title>Filetype</title>
+    <style>
+    #app {
+        padding-left: 100px;
+    }
+
+    .skilltag {
+        font-size: 15px;
+        padding-top: 20px;
+        padding-left: 60px;
+        color: gray;
+        font-weight: bold;
+    }
+    </style>
 </head>
 
 <body>
     <div class="row">
         <ul class="topnav" id="myTopnav">
-            <li><img src="media/osmosis learn logo.png" alt="osmosis learn logo" class="logo" width="250" height="80"></li>
-            <li><a href="#explore" class="explore">Explore</a></li>
+            <li><img src="media/osmosis learn logo.png" alt="osmosis learn logo" class="logo" width="250" height="80">
+            </li>
+            <li><a href="home.php" class="explore">Explore</a></li>
             <li><a href="#create" class="create">Create</a></li>
             <li><a href="#events" class="events">Events</a></li>
             <li><a href="#login" class="login">Log In</a></li>
@@ -48,108 +62,186 @@ if (!empty($row)) {
         </ul>
         <hr>
         <div class="navbottom" style="padding-left:50px;">
-            <i class="fas fa-home" href="home.php"></i>
+            <a href="home.php" style="text-decoration:none;color:black;">
+                <i class="fas fa-home"></i>
+            </a>
             <a> > </a>
             <?php echo $title; ?>
         </div>
         <hr>
         <?php if (!empty($id)) { ?>
-            <div class="iframe">
-                <?php if ($filetype == "LINK") { ?>
-                    <!-- Vue component for LINK -->
-                    <div id="app">
-                        <iframe-component width="960" height="436" :src=" '<?php echo $content ?>' "></iframe-component>
-                    </div>
-                <?php } elseif ($filetype == "IMG") { ?>
-                    <!-- Vue component for IMG -->
-                    <div id="app">
-                        <iframe-component width="960" height="436" :src="'media/<?php echo $content ?>'"></iframe-component>
-                    </div>
-                <?php } elseif ($filetype == 'MP3') { ?>
-                    <!-- Vue component for MP3 -->
-                    <div id="app">
-                        <iframe-component width="960" height="436" :src="'media/<?php echo $content ?>'"></iframe-component>
-                    </div>
-                <?php } elseif ($filetype == "MP4") { ?>
-                    <!-- Vue component for MP4 -->
-                    <div id="app">
-                        <iframe-component width="960" height="436" :src="'media/<?php echo $content ?>'"></iframe-component>
-                    </div>
-                <?php } elseif ($filetype == "pdf") { ?>
-                    <!-- Vue component for PDF -->
-                    <div id="app">
-                        <iframe-component width="960" height="436" :src="'media/<?php echo $content ?>'"></iframe-component>
-                    </div>
-                <?php } else { ?>
-                    <!-- Vue component for default (fallback) -->
-                    <div id="app">
-                        <iframe-component width="960" height="436" :src="'<?php echo $content ?>'"></iframe-component>
-                    </div>
-                <?php } ?>
+        <div class="iframe">
+            <?php if ($filetype == "LINK") { ?>
+            <!-- Vue component for LINK -->
+            <div id="app">
+                <iframe-component width="960" height="436" :src=" '<?php echo $content ?>' "></iframe-component>
             </div>
+            <?php } elseif ($filetype == "IMG") { ?>
+            <!-- Vue component for IMG -->
+            <div id="app">
+                <iframe-component width="960" height="436" :src="'media/<?php echo $content ?>'"></iframe-component>
+            </div>
+            <?php } elseif ($filetype == 'MP3') { ?>
+            <!-- Vue component for MP3 -->
+            <div id="app">
+                <iframe-component width="960" height="436" :src="'media/<?php echo $content ?>'"></iframe-component>
+            </div>
+            <?php } elseif ($filetype == "MP4") { ?>
+            <!-- Vue component for MP4 -->
+            <div id="app">
+                <iframe-component width="960" height="436" :src="'media/<?php echo $content ?>'"></iframe-component>
+            </div>
+            <?php } elseif ($filetype == "pdf") { ?>
+            <!-- Vue component for PDF -->
+            <div id="app">
+                <iframe-component width="960" height="436" :src="'media/<?php echo $content ?>'"></iframe-component>
+            </div>
+            <?php } else { ?>
+            <!-- Vue component for default (fallback) -->
+            <div id="app">
+                <iframe-component width="960" height="436" :src="'<?php echo $content ?>'"></iframe-component>
+            </div>
+            <?php } ?>
+        </div>
 
-            <script>
-                // Define the Vue iframe component
-                Vue.component('iframe-component', {
-                    props: ['src'],
-                    template: '<iframe :src="src"></iframe>'
-                });
+        <script>
+        // Define the Vue iframe component
+        Vue.component('iframe-component', {
+            props: ['src'],
+            template: '<iframe :src="src"></iframe>'
+        });
 
-                // Initialize the Vue app
-                new Vue({
-                    el: '#app',
-                });
-            </script>
-            <div style="font-weight:lighter;">
-                <div class="toprow">
-                    <b class="uploaded-by" style="padding-left:60px;">Uploaded By</b>
-                    <b class="authored-by" style="padding-left:40px;">Authored By</b>
-                    <b class="time">
-                        <?php echo $filetype ?>.
-                        <?php echo $duration ?> .Published
-                        <?php echo $date ?>
-                    </b>
+        // Initialize the Vue app
+        new Vue({
+            el: '#app',
+        });
+        </script>
+        <div style="font-weight:lighter;">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <b class="uploaded-by" style="padding-left:60px;">Uploaded By</b>
+                        </br>
+                        <b class="publisher">
+                            <?php echo $publisher ?>
+                        </b>
+                    </div>
+                    <div class="col">
+                        <b class="authored-by" style="padding-left:40px;">Authored By</b>
+                        </br>
+                        <b class="author">
+                            <?php echo $author ?>
+                        </b>
+                    </div>
+                    <div class="col">
+                        <b class="info" style="font:10px;padding-left:0;color:#8c8581;">
+                            <?php echo $filetype ?>.
+                            <?php echo $duration ?> .Published
+                            <?php echo $date ?>
+                        </b>
+                    </div>
                 </div>
-                <div class="secondrow" style="color:gray;padding-bottom:10px;">
-                    <b class="publisher" style="padding-left:60px;">
-                        <?php echo $publisher ?>
-                    </b>
-                    <b class="author" style="padding-left:180px;">
-                        <?php echo $author ?>
-                    </b>
+            </div>
+            <hr>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <i class="fas fa-info-circle fa-xl" style="color: #b88051;"></i>
+                                </div>
+                                <div class="col">
+                                    <i class="far fa-clone fa-xl" style="color: #b88051;"></i>
+                                </div>
+                                <div class="col">
+                                    <i class="far fa-copy fa-xl" style="color: #b88051;"></i>
+                                </div>
+                                <div class="col">
+                                    <i class="fas fa-user-friends fa-xl" style="color: #b88051;"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+
+                    </div>
+                    <div class="col">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <i class="far fa-lightbulb fa-xl" style="color: #b88051;"></i>
+                                </div>
+                                <div class="col">
+                                    <i class="far fa-bookmark fa-xl" style="color: #b88051;"></i>
+                                </div>
+                                <div class="col">
+                                    <i class="fas fa-share-alt fa-xl" style="color: #b88051;"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <hr>
-                <div class="information">
-                    <b class="intent" style="font-size:30px; padding-top:20px; padding-left: 60px;">Intent of this Asset</b>
-                    </br>
-                    <b class="container" style="padding-left:60px;padding-bottom:100px">
+            </div>
+            <hr>
+            <div class="information">
+                <b class="intent" style="font-size:30px; padding-top:20px; padding-left: 60px;">Intent of this Asset</b>
+                </br>
+                <b class="container" style="text-transform:none;">
+                    <div class="container">
                         <?php echo $intent ?>
-                    </b>
-                </div>
+                    </div>
+                </b>
+            </div>
+            <div class="skilltags">
+                <b class="skilltag" style="font-size:15px; padding-top:20px; padding-left: 60px;color:#8c8581;">SKILL
+                    TAGS</b>
+                </br>
+                <b class="container" style="text-transform:none;">
+                    <div class="container">
+                        <?php echo $skilltags ?>
+                    </div>
+                </b>
             </div>
         </div>
+    </div>
     <?php } ?>
-    <footer class="navbar navbar-expand-sm" style="background-color: #3a2718;">
-        <div class="container-fluid">
-            <ul class="nav text-muted" style="background-color: #3a2718;">
-                <li class="nav-item">
-                    <a class="pl-2 pr-2 btn btn-footer" style="color: #fff;" href="about-us">About Us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="pl-2 pr-2 btn btn-footer" style="color: #fff;" href="#private-policy">Privacy Policy</a>
-                </li>
-            </ul>
-            <button class="button button1" style="background-color:#3a2718;">
-                <a class="pl-2 pr-2 btn btn-footer" style="color: #fff;" href="#feedback">We Love to Hear From You</a>
-            </button>
-        </div>
-    </footer>
+    <div class="footer" style="padding: 0;left: 0;bottom: 0;width: 100%;">
+        <footer class="navbar navbar-expand-sm" style="background-color: #3a2718;">
+            <div class="container-fluid">
+                <ul class="nav text-muted" style="background-color: #3a2718;">
+                    <li class="nav-item">
+                        <a class="pl-2 pr-2 btn btn-footer" style="color: #fff;" href="about-us">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="pl-2 pr-2 btn btn-footer" style="color: #fff;" href="#private-policy">Privacy
+                            Policy</a>
+                    </li>
+                </ul>
+                <button class="button button1" style="background-color:#3a2718;">
+                    <a class="pl-2 pr-2 btn btn-footer" style="color: #fff;" href="#feedback">We Love to Hear From
+                        You</a>
+                </button>
+            </div>
+        </footer>
 
-    <div class="footer footer-btm" style="background-color: #503620; color: white;">
-        <div class="footer container justify-content-end text-end">
-            © 2023 Osmosis Learn
+        <div class="footer footer-btm" style="background-color: #503620; color: white;">
+            <div class="footer container justify-content-end text-end">
+                © 2023 Osmosis Learn
+            </div>
         </div>
     </div>
 </body>
+<!-- allow iframes load faster -->
+<script>
+function ready() {
+    var target = document.getElementById('app');
+
+    for (var i = 0; i < target.length; i++) {
+        var src = target[i].getAttribute('data-src');
+        target[i].setAttribute('src', src);
+    }
+}
+</script>
 
 </html>
