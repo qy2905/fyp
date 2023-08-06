@@ -23,8 +23,9 @@ while ($row = mysqli_fetch_array($result)) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!--stylesheet-->
     <link rel="stylesheet" href="style.css">
-    <title>FYP prototype</title>
+    <title>Osmosis</title>
     <style>
+    /* carousel */
     .carousel-inner .carousel-item .col-md-4 {
         flex: 0 0 33.333333%;
         max-width: 33.333333%;
@@ -67,14 +68,14 @@ while ($row = mysqli_fetch_array($result)) {
         <ul class="topnav" id="myTopnav">
             <li><img src="media/osmosis learn logo.png" alt="osmosis learn logo" class="logo" width="250" height="80">
             </li>
-            <li><a href="#explore" class="explore">Explore</a></li>
+            <li><a href="home.php" class="explore">Explore</a></li>
             <li><a href="#create" class="create">Create</a></li>
             <li><a href="#events" class="events">Events</a></li>
             <li><a href="#login" class="login">Log In</a></li>
             <li><a href="#signup" class="signup">Sign Up</a></li>
         </ul>
         <hr>
-        <h1>Explore Assets</h1>
+        <h1 class="exploreasset">Explore Assets</h1>
         <hr>
         <!-- Carousel Structure -->
         <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -102,33 +103,35 @@ while ($row = mysqli_fetch_array($result)) {
                         <div class="col-md-4">
                             <div class="card">
                                 <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($picture); ?>"
-                                    class="card-img-top" alt="<?php echo $title; ?>" />
-                                <div class="card-body">
-                                    <h5 class="card-title"><a
-                                            href="details.php?asset_id=<?php echo $id; ?>" style="text-decoration:none;color:black;"><?php echo $title; ?></a>
-                                    </h5>
-                                    <div class="container-fluid" id="info">
-                                        <?php echo $filetype; ?> &bull;
-                                        <?php echo $duration; ?> &bull;
-                                        <?php echo $date; ?>
-                                    </div>
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col">
-                                                <i class="fas fa-user-circle" id="author"
-                                                    data-tippy-placement="bottom"></i>
-                                            </div>
-                                            <div class="col">
-                                                <i class="fas fa-info-circle" id="intent"
-                                                    data-tippy-placement="bottom"></i>
-                                            </div>
-                                            <div class="col">
-                                                <i class="fas fa-tags fa-rotate-90" id="skilltags"
-                                                    data-tippy-placement="bottom"></i>
+                                    class="card-img-top" alt="<?php echo $title; ?>" /><a
+                                    href="details.php?asset_id=<?php echo $id; ?>"
+                                    style="text-decoration:none;color:black;">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><a href="details.php?asset_id=<?php echo $id; ?>"
+                                                style="text-decoration:none;color:black;"><?php echo $title; ?></a>
+                                        </h5>
+                                        <div class="container-fluid" id="info">
+                                            <?php echo $filetype; ?> &bull;
+                                            <?php echo $duration; ?> &bull;
+                                            <?php echo $date; ?>
+                                        </div>
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <i class="fas fa-user-circle fa-lg" id="author"
+                                                        data-tippy-placement="bottom" style="color: #b88051;"></i>
+                                                </div>
+                                                <div class="col">
+                                                    <i class="fas fa-info-circle fa-lg" id="intent"
+                                                        data-tippy-placement="bottom" style="color: #b88051;"></i>
+                                                </div>
+                                                <div class="col">
+                                                    <i class="fas fa-tags fa-rotate-90 fa-lg" id="skilltags"
+                                                        data-tippy-placement="bottom" style="color: #b88051;"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                             </div>
                         </div>
                         <?php
@@ -150,7 +153,7 @@ while ($row = mysqli_fetch_array($result)) {
             </a>
         </div>
     </div>
-    <div class="footer" style="position:fixed;left: 0;bottom: 0;width: 100%;">
+    <div class="footer" style="padding: 0;left: 0;bottom: 0;width: 100%;">
         <footer class="navbar navbar-expand-sm" style="background-color: #3a2718;">
             <div class="container-fluid">
                 <ul class="nav text-muted" style="background-color: #3a2718;">
@@ -169,7 +172,7 @@ while ($row = mysqli_fetch_array($result)) {
             </div>
         </footer>
 
-        <div class="footer footer-btm" style="background-color: #503620; color: white;">
+        <div class="footer footer-btn" style="background-color: #503620; color: white;">
             <div class="footer container justify-content-end text-end">
                 © 2023 Osmosis Learn
             </div>
