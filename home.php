@@ -4,69 +4,61 @@ include "dbFunctions.php";
 $query = "SELECT * FROM asset";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
+// Fetch all data and store it in an array
+$arrContent = array();
 while ($row = mysqli_fetch_array($result)) {
     $arrContent[] = $row;
 }
 ?>
+
 <!DOCTYPE HTML>
 <html>
 
 <head>
     <meta charset="UTF-8">
+    <link href="style.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
     <!--font awesome css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!--stylesheet-->
     <link rel="stylesheet" href="style.css">
-    <title>Osmosis</title>
+    <title>FYP prototype</title>
     <style>
-        /* carousel css */
+    .carousel-inner .carousel-item .col-md-4 {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
 
-        .multi-item-carousel {
-            .carousel-inner {
-                >.item {
-                    transition: 500ms ease-in-out left;
-                }
+    .carousel-inner .carousel-item .card {
+        border: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
 
-                .active {
-                    &.left {
-                        left: -33%;
-                    }
+    .carousel-inner .carousel-item .card-img-top {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        flex-grow: 1;
+    }
 
-                    &.right {
-                        left: 33%;
-                    }
-                }
+    .carousel-inner .carousel-item .card-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
 
-                .next {
-                    left: 33%;
-                }
+    .carousel-inner .carousel-item .card-text {
+        font-size: 1rem;
+    }
 
-                .prev {
-                    left: -33%;
-                }
-
-                @media all and (transform-3d),
-                (-webkit-transform-3d) {
-                    >.item {
-                        /* // use your favourite prefixer here */
-                        transition: 500ms ease-in-out left;
-                        transition: 500ms ease-in-out all;
-                        backface-visibility: visible;
-                        transform: none !important;
-                    }
-                }
-            }
-
-            .carouse-control {
-
-                &.left,
-                &.right {
-                    background-image: none;
-                }
-            }
-        }
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 100px;
+        height: 100px;
+    }
     </style>
 </head>
 
@@ -75,83 +67,95 @@ while ($row = mysqli_fetch_array($result)) {
         <ul class="topnav" id="myTopnav">
             <li><img src="media/osmosis learn logo.png" alt="osmosis learn logo" class="logo" width="250" height="80">
             </li>
-            <li><a href="home.php" class="explore">Explore</a></li>
+            <li><a href="#explore" class="explore">Explore</a></li>
             <li><a href="#create" class="create">Create</a></li>
             <li><a href="#events" class="events">Events</a></li>
             <li><a href="#login" class="login">Log In</a></li>
             <li><a href="#signup" class="signup">Sign Up</a></li>
         </ul>
         <hr>
-        <h1 class="exporeasset" style="">Explore Assets</h1>
+        <h1>Explore Assets</h1>
         <hr>
-        <div>
-            <?php
-            for ($i = 0; $i < count($arrContent); $i++) {
-                $id = $arrContent[$i]['asset_id'];
-                $filetype = $arrContent[$i]['filetype'];
-                $author = $arrContent[$i]['author'];
-                $intent = $arrContent[$i]['intent'];
-                $picture = $arrContent[$i]['thumbnail'];
-                $skilltags = $arrContent[$i]['skill_tags'];
-                $publisher = $arrContent[$i]['publisher'];
-                $title = $arrContent[$i]['title'];
-                $content = $arrContent[$i]['content'];
-                $duration = $arrContent[$i]['duration'];
-                $date = $arrContent[$i]['pub_date'];
-                ?>
-                <!--cards-->
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="carousel slide multi-item-carousel" id="theCarousel">
-                            <div class="carousel-inner">
-                                <div class="card" style="width: 18rem;">
-                                    <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($picture); ?>"
-                                        class="card-img-top" />
-                                    <div class="card-body" style="outline-color:black;">
-                                        <p class="card-text">
-                                        <div class="container-fluid">
-                                            <a href="details.php?asset_id=<?php echo $id; ?>"><?php echo $title; ?></a>
-                                        </div>
-                                        <div class="container-fluid" id="info">
-                                            <?php echo $filetype; ?> &bull;
-                                            <?php echo $duration; ?> &bull;
-                                            <?php echo $date; ?>
-                                        </div>
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <i class="fas fa-user-circle"></i>
-                                                </div>
-                                                <div class="col">
-                                                    <i class="fas fa-info-circle"></i>
-                                                </div>
-                                                <div class="col">
-                                                    <i class="fas fa-tags fa-rotate-90"></i>
-                                                </div>
+        <!-- Carousel Structure -->
+        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <?php
+    $totalSlides = count($arrContent);
+    for ($i = 0; $i < $totalSlides; $i += 3) {
+        ?>
+                <div class="carousel-item <?php echo ($i === 0) ? 'active' : ''; ?>">
+                    <div class="row">
+                        <?php
+                for ($j = $i; $j < $i + 3 && $j < $totalSlides; $j++) {
+                    $id = $arrContent[$j]['asset_id'];
+                    $filetype = $arrContent[$j]['filetype'];
+                    $author = $arrContent[$j]['author'];
+                    $intent = $arrContent[$j]['intent'];
+                    $picture = $arrContent[$j]['thumbnail'];
+                    $skilltags = $arrContent[$j]['skill_tags'];
+                    $publisher = $arrContent[$j]['publisher'];
+                    $title = $arrContent[$j]['title'];
+                    $content = $arrContent[$j]['content'];
+                    $duration = $arrContent[$j]['duration'];
+                    $date = $arrContent[$j]['pub_date'];
+                    ?>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($picture); ?>"
+                                    class="card-img-top" alt="<?php echo $title; ?>" />
+                                <div class="card-body">
+                                    <h5 class="card-title"><a
+                                            href="details.php?asset_id=<?php echo $id; ?>" style="text-decoration:none;color:black;"><?php echo $title; ?></a>
+                                    </h5>
+                                    <div class="container-fluid" id="info">
+                                        <?php echo $filetype; ?> &bull;
+                                        <?php echo $duration; ?> &bull;
+                                        <?php echo $date; ?>
+                                    </div>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col">
+                                                <i class="fas fa-user-circle" id="author"
+                                                    data-tippy-placement="bottom"></i>
+                                            </div>
+                                            <div class="col">
+                                                <i class="fas fa-info-circle" id="intent"
+                                                    data-tippy-placement="bottom"></i>
+                                            </div>
+                                            <div class="col">
+                                                <i class="fas fa-tags fa-rotate-90" id="skilltags"
+                                                    data-tippy-placement="bottom"></i>
                                             </div>
                                         </div>
-                                        </p>
                                     </div>
                                 </div>
                             </div>
-                            <a class="left carousel-control" href="#theCarousel" data-slide="prev"><i
-                                    class="glyphicon glyphicon-chevron-left"></i></a>
-                            <a class="right carousel-control" href="#theCarousel" data-slide="next"><i
-                                    class="glyphicon glyphicon-chevron-right"></i></a>
                         </div>
+                        <?php
+                }
+                ?>
                     </div>
                 </div>
-                <!--end card-->
                 <?php
-            }
-            ?>
+    }
+    ?>
+            </div>
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true" style="color:black;"></span>
+                <span class="visually-hidden">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#myCarousel" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </a>
         </div>
+    </div>
+    <div class="footer" style="position:fixed;left: 0;bottom: 0;width: 100%;">
         <footer class="navbar navbar-expand-sm" style="background-color: #3a2718;">
             <div class="container-fluid">
                 <ul class="nav text-muted" style="background-color: #3a2718;">
                     <li class="nav-item">
-                        <a class="pl-2 pr-2 btn btn-footer" style="color: #fff;" href="about-us">About
-                            Us</a>
+                        <a class="pl-2 pr-2 btn btn-footer" style="color: #fff;" href="about-us">About Us</a>
                     </li>
                     <li class="nav-item">
                         <a class="pl-2 pr-2 btn btn-footer" style="color: #fff;" href="#private-policy">Privacy
@@ -159,9 +163,8 @@ while ($row = mysqli_fetch_array($result)) {
                     </li>
                 </ul>
                 <button class="button button1" style="background-color:#3a2718;">
-                    <a class="pl-2 pr-2 btn btn-footer" style="color: #fff;" href="#feedback">We Love to
-                        Hear
-                        From You</a>
+                    <a class="pl-2 pr-2 btn btn-footer" style="color: #fff;" href="#feedback">We Love to Hear From
+                        You</a>
                 </button>
             </div>
         </footer>
@@ -171,37 +174,23 @@ while ($row = mysqli_fetch_array($result)) {
                 © 2023 Osmosis Learn
             </div>
         </div>
+    </div>
+
 </body>
+
+<script src="https://unpkg.com/popper.js@1"></script>
+<script src="https://unpkg.com/tippy.js@5"></script>
+
 <script>
-    //iframe load when user on homepage
-    (function (d) {
-        var iframe = d.pdy.appendChild(d.createElement('iframe')), doc = iframe.contentWindow.document;
-        doc.open().write('<body onload="" 'var d = document; d.getElementsByTagName('head')[0].' + 'appendChild(d.createElement('script')).src' +
-            = VV / path\to\file\"" > ");
-        doc.close(); //iframe, onload, event happens
-
-    })(document);
-
-    // Instantiate the Bootstrap carousel
-    $('.multi-item-carousel').carousel({
-        interval: false
-    });
-
-    // for every slide in carousel, copy the next slide's item in the slide.
-    // Do the same for the next, next item.
-    $('.multi-item-carousel .item').each(function () {
-        var next = $(this).next();
-        if (!next.length) {
-            next = $(this).siblings(':first');
-        }
-        next.children(':first-child').clone().appendTo($(this));
-
-        if (next.next().length > 0) {
-            next.next().children(':first-child').clone().appendTo($(this));
-        } else {
-            $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
-        }
-    });
+tippy('#author', {
+    content: "Author"
+});
+tippy('#intent', {
+    content: "Intent of this asset"
+});
+tippy('#skilltags', {
+    content: "Skill Tags"
+});
 </script>
 
 </html>
