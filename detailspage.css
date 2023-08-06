@@ -78,14 +78,3 @@ h1 {
     padding-left: 40px;
     
 }
-
-@media screen and (max-width: 750px) {
-    .uploaded-by .authored-by .time {
-        width: 100%;
-    }
-}
-
-/*iframe*/
-#app {
-    padding-left: 50px;
-}
